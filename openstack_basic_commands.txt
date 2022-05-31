@@ -1,0 +1,68 @@
+Openstack verification
+
+openstack-status
+systemctl status rabbitmq-server
+systemctl status mariadb-server
+systemctl status keystone
+
+vim nova.conf
+rabbit_host=
+rabbit_port=
+
+Storage is ephemeral
+Instances are stored under compute node /var/lib/nova/instances
+VM config stored in libvirt.xml /var/lib/nova/instances/<uuid of instance>
+disk file is storage for the instance
+
+keystone service-list
+keystone role-list
+keystone user-list
+keystone endpoint-list
+
+openstack-service status keystone
+cd /usr/lib/systemd/system
+ls open*
+systemctl status openstack-keystone
+
+less /etc/keystone/keystone.conf
+grep -v '^#' /etc/keystone/keystone.conf
+mysql -e 'use keystone; show tables;'
+
+Managing users, roles and services
+
+keystone user-create --name test --pass password
+keystone user-list
+keystone user-delete <user id>
+keystone project-create --name <tenant-name>
+keystone project-list
+keystone role-create --name <role name>
+keystone user-role-add --user-id <user> --role-id <role> --project-id <project>
+
+Manage endpoint
+
+openstack endpoint-list
+openstack endpoint list
+openstack endpoint show <id of endpoint>
+
+openstack service list
+openstack service create --decription "test service" test
+openstack endpoint create --publicurl http://192.168.1.1:5678 --internalurl http://192.168.1.1:5678 --adminurl http://192.168.1.1:5678 <service id>
+
+openstack aggregate list
+cinder service-list
+
+
+openstack hypervisor list
+openstack server list
+openstack flavor list
+
+openstack compute service list
+openstack image list
+openstack network agent list
+
+openstack network list
+openstack subnet list 
+openstack port list
+openstack router list
+openstack floating ip list
+
